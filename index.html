@@ -88,7 +88,7 @@
             flex-direction: column;
             align-items: flex-start;
         }
-        .wheel-button {
+        .wheel-button, .add-participant-button {
             margin-top: 20px;
             padding: 10px 20px;
             font-size: 18px;
@@ -107,16 +107,32 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+            background-color: rgba(0, 0, 0, 0.7); /* Dark background with transparency */
+            padding: 20px;
+            border-radius: 10px;
         }
         .participant-form input {
             padding: 10px;
             font-size: 16px;
             margin-bottom: 10px;
+            border: 2px solid #FF8C00;
+            border-radius: 5px;
+            background-color: #222; /* Dark background for input */
+            color: #FFF; /* White text color for contrast */
+        }
+        .participant-form button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #FF8C00;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
         }
         .bottom-left {
             position: fixed;
             bottom: 10px;
-            left: 20px;
+            left: 400px;
             font-size: 18px;
             color: #FF8C00;
         }
@@ -158,10 +174,10 @@
     </div>
     
     <div class="wheel-controls">
-        <form class="participant-form">
+        <div class="participant-form">
             <input type="text" id="participantName" placeholder="Enter participant name">
-            <button type="button" onclick="addParticipant()">Add Participant</button>
-        </form>
+            <button class="add-participant-button" type="button" onclick="addParticipant()">Add Participant</button>
+        </div>
         <button class="wheel-button" onclick="spinWheel()">Spin the Wheel!</button>
         <div class="wheel-result" id="wheel-result">Result will appear here</div>
     </div>
