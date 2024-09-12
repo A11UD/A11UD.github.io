@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spinning Wheel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: transparent;
+            margin: 0;
+            color: white;
+        }
+        .wheel-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 5px solid #FF8C00;
+            overflow: hidden;
+            margin: 20px auto;
+        }
+        .wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transform-origin: center;
+            background: conic-gradient(#FF8C00 0% 25%, #333 25% 50%, #FF8C00 50% 75%, #333 75% 100%);
+        }
+        .wheel-controls {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        .wheel-button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #FF8C00;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .wheel-result {
+            font-size: 18px;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .participant-form {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        .participant-form input {
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 5px;
+            border: 2px solid #FF8C00;
+            margin-bottom: 10px;
+            color: #FFF;
+            background-color: #222;
+        }
+        .participant-form button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #FF8C00;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wheel-controls">
+        <div class="participant-form">
+            <input type="text" id="participant-input" placeholder="Enter participant name">
+            <button onclick="addParticipantFromInput()">Add Participant</button>
+        </div>
+        <div class="wheel-container">
+            <div class="wheel" id="wheel"></div>
+        </div>
+        <button class="wheel-button" onclick="spinWheel()">Spin the Wheel!</button>
+        <div class="wheel-result" id="wheel-result">Result will appear here</div>
+    </div>
+
+    <script>
+        let wheel = document.getElementById('wheel');
+        let wheelResult = document.getElementById('wheel-result');
+        let participantInput = document.getElementById('participant-input');
+        let participants = [];
+
+        // Spinning wheel functionality
+        function spinWheel() {
+            if (participants.length === 0) {
+                wheelResult.textContent = 'Add participants first!';
+                return;
+            }
+            let spinDegree = Math.floor(Math.random() * 360) + 3600; // Ensures multiple spins
+            wheel.style.transition = 'transform 4s cubic-bezier(0.33, 0, 0.67, 1)';
+            wheel.style.transform = `rotate(${spinDegree}deg)`;
+
+            // Calculate winner after spin
+            setTimeout(() => {
+                let winningIndex = Math.floor((spinDegree % 360) / (360 / participants.length));
+                wheelResult.textContent = `Winner: ${participants[winningIndex]}`;
+                participants = []; // Reset participants
+                updateWheel();
+            }, 4000); // Match duration of spin animation
+        }
+
+        function addParticipant(name) {
+            if (name && !participants.includes(name)) {
+                participants.push(name);
+                updateWheel();
+            }
+        }
+
+        function addParticipantFromInput() {
+            let name = participantInput.value.trim();
+            addParticipant(name);
+            participantInput.value = '';
+        }
+
+        function updateWheel() {
+            let numSegments = participants.length;
+            let anglePerSegment = 360 / numSegments;
+            let gradient = '';
+            for (let i = 0; i < numSegments; i++) {
+                gradient += `#FF8C00 ${i * anglePerSegment}deg, #333 ${(i + 1) * anglePerSegment}deg, `;
+            }
+            wheel.style.background = `conic-gradient(${gradient.slice(0, -2)})`;
+        }
+    </script>
+
+</body>
+</html>
