@@ -77,12 +77,12 @@
             align-items: center;
         }
         .wheel {
-            position: absolute;
+            position: relative;
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            transform-origin: center;
             background: conic-gradient(#FF8C00 0% 25%, #333 25% 50%, #FF8C00 50% 75%, #333 75% 100%);
+            transform-origin: center;
             transition: transform 4s ease-out; /* Smooth spinning effect */
         }
         .wheel-segment {
@@ -93,19 +93,19 @@
             text-align: center;
             line-height: 1.2;
             transform-origin: 100% 100%;
-            background: transparent;
+            clip-path: polygon(100% 100%, 0 100%, 0 0); /* Trapezoid shape for each segment */
         }
         .wheel-segment span {
             display: block;
             position: absolute;
             width: 100%;
-            transform: rotate(-90deg);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             font-size: 14px; /* Smaller font size to fit names better */
             color: white;
             font-weight: bold;
             text-align: center;
-            margin-top: 50%;
-            transform: translateY(-50%) rotate(90deg); /* Center text */
         }
         .wheel-controls {
             position: fixed;
@@ -132,11 +132,14 @@
             background-color: #333; /* Matching background color */
             padding: 10px;
             border-radius: 5px; /* Rounded corners for consistency */
+            position: absolute;
+            bottom: 0; /* Align with the bottom of the wheel */
+            left: 0;
         }
         .participant-form {
             position: fixed;
             left: 340px; /* Aligned with wheel controls */
-            top: 450px; /* Positioned below the wheel controls */
+            top: 750px; /* Positioned below the wheel controls */
             background-color: rgba(0, 0, 0, 0.7); /* Dark background with transparency */
             padding: 20px;
             border-radius: 10px;
@@ -188,12 +191,12 @@
     <!-- Spinning Wheel -->
     <div class="wheel-container">
         <div class="wheel" id="wheel"></div>
+        <div id="wheel-result" class="wheel-result">Result will appear here</div>
     </div>
     
     <!-- Wheel Controls -->
     <div class="wheel-controls">
         <button class="wheel-button" onclick="spinWheel()">Spin the Wheel!</button>
-        <div id="wheel-result" class="wheel-result">Result will appear here</div>
     </div>
     
     <!-- Add Participant Form -->
@@ -237,6 +240,7 @@
             }
         }
 
+        // Open RickRoll
         function openRickRoll() {
             window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
         }
@@ -259,11 +263,15 @@
         // Update the wheel with participants
         function updateWheel() {
             const numSegments = participants.length;
+            if (numSegments === 0) return;
+
             let segments = '';
             let angle = 360 / numSegments;
+
             for (let i = 0; i < numSegments; i++) {
                 let startAngle = i * angle;
                 let rotateStart = (startAngle + 90) % 360;
+
                 segments += `
                     <div class="wheel-segment" style="transform: rotate(${rotateStart}deg);">
                         <span>${participants[i]}</span>
