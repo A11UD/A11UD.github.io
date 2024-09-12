@@ -84,13 +84,13 @@
             background: conic-gradient(#FF8C00 0% 25%, #333 25% 50%, #FF8C00 50% 75%, #333 75% 100%);
         }
         .wheel-controls {
-            position: absolute;
-            right: -180px; /* Adjust based on wheel size */
-            top: 50%;
-            transform: translateY(-50%);
+            position: fixed;
+            right: 20px; /* Distance from the right edge */
+            top: 580px; /* Same vertical position as the wheel */
             display: flex;
             flex-direction: column;
             align-items: center;
+            color: white;
         }
         .wheel-button {
             padding: 10px 20px;
@@ -176,13 +176,13 @@
         <button onclick="addParticipantFromInput()">Add Participant</button>
     </div>
 
-    <!-- Spinning Wheel -->
+    <!-- Spinning Wheel and Controls -->
     <div class="wheel-container">
         <div class="wheel" id="wheel"></div>
-        <div class="wheel-controls">
-            <button class="wheel-button" onclick="spinWheel()">Spin the Wheel!</button>
-            <h2 id="wheel-result" class="wheel-result">Result will appear here</h2>
-        </div>
+    </div>
+    <div class="wheel-controls">
+        <button class="wheel-button" onclick="spinWheel()">Spin the Wheel!</button>
+        <h2 id="wheel-result" class="wheel-result">Result will appear here</h2>
     </div>
 
     <div class="bottom-left">
