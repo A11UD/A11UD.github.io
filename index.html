@@ -62,6 +62,35 @@
             grid-template-columns: repeat(4, 1fr); /* Create 4 equal columns */
             gap: 4px; /* Space between buttons */
         }
+        .wheel-container {
+            position: fixed;
+            left: 20px;
+            top: 580px; /* Positioned below the calculator */
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 5px solid #FF8C00;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        .wheel {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transform-origin: center;
+            background: conic-gradient(#FF8C00 0% 25%, #333 25% 50%, #FF8C00 50% 75%, #333 75% 100%);
+        }
+        .wheel-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #FF8C00;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
         .bottom-left {
             position: fixed;
             bottom: 10px;
@@ -106,6 +135,13 @@
         </div>
     </div>
 
+    <!-- Spinning Wheel -->
+    <div class="wheel-container">
+        <div class="wheel" id="wheel"></div>
+        <button class="wheel-button" onclick="spinWheel()">Spin the Wheel!</button>
+        <h2 id="wheel-result">Result will appear here</h2>
+    </div>
+
     <div class="bottom-left">
         <strong>GitHub:</strong> <a href="https://github.com/A11UD" target="_blank" style="color: #FF8C00;">A11UD</a><br>
         <strong>Discord:</strong> a11u666
@@ -113,6 +149,8 @@
 
     <script>
         let resultField = document.getElementById('result');
+        let wheel = document.getElementById('wheel');
+        let wheelResult = document.getElementById('wheel-result');
 
         // Append character to input field
         function appendCharacter(character) {
@@ -137,6 +175,8 @@
                 resultField.value = 'Error';
             }
         }
+
+        // Open Rick Roll
         function openRickRoll() {
             window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
         }
@@ -146,6 +186,46 @@
             window.open('https://www.mol.fi', '_blank');
         }
 
+        // Spinning wheel functionality
+        let participants = [];
+        
+        function spinWheel() {
+            if (participants.length === 0) {
+                wheelResult.textContent = 'Add participants first!';
+                return;
+            }
+            let spinDegree = Math.floor(Math.random() * 360) + 3600; // Ensures multiple spins
+            wheel.style.transition = 'transform 4s cubic-bezier(0.33, 0, 0.67, 1)';
+            wheel.style.transform = `rotate(${spinDegree}deg)`;
+            
+            // Calculate winner after spin
+            setTimeout(() => {
+                let winningIndex = Math.floor((spinDegree % 360) / (360 / participants.length));
+                wheelResult.textContent = `Winner: ${participants[winningIndex]}`;
+            }, 4000); // Match duration of spin animation
+        }
+
+        function addParticipant(name) {
+            if (name && !participants.includes(name)) {
+                participants.push(name);
+                updateWheel();
+            }
+        }
+
+        function updateWheel() {
+            let numSegments = participants.length;
+            let anglePerSegment = 360 / numSegments;
+            let gradient = '';
+            for (let i = 0; i < numSegments; i++) {
+                gradient += `#FF8C00 ${i * anglePerSegment}deg, #333 ${(i + 1) * anglePerSegment}deg, `;
+            }
+            wheel.style.background = `conic-gradient(${gradient.slice(0, -2)})`;
+        }
+
+        // Example of adding participants
+        addParticipant('Alice');
+        addParticipant('Bob');
+        addParticipant('Charlie');
     </script>
 
 </body>
