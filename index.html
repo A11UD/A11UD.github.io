@@ -9,26 +9,35 @@
             text-align: center;
             background-image: url('guts.jpg'); /* Path to your image */
             background-size: cover; /* Ensures the image covers the entire page */
-            background-position: center 20%; /* Adjusts the image position slightly */
+            background-position: center 15%; /* Adjusts the image position slightly */
             background-repeat: no-repeat; /* Prevents the image from repeating */
             background-attachment: fixed; /* Adds a parallax effect */
             margin-top: 50px;
         }
         h1 {
             font-family: "Brush Script MT", cursive; /* Use Brush Script MT for heading */
+            font-size: 64px;
             color: #FF8C00; /* Orange color for contrast with the background */
         }
-        p {
+        .bottom-left {
+            position: fixed; /* Sticks to the bottom-left of the viewport */
+            bottom: 10px; /* 10px from the bottom */
+            left: 10px; /* 10px from the left */
             font-size: 18px;
-            color: #FF8C00; /* Orange text for better readability */
+            color: #FF8C00;
+        }
+        a {
+            color: #FF8C00; /* Orange link color */
+            text-decoration: none; /* Removes the underline from links */
         }
     </style>
 </head>
 <body>
     <h1>Greetings wanderer, you seem to be lost if you have come here.</h1>
-    <p>
-        <strong>GitHub:</strong> <a href="https://github.com/A11UD" target="_blank" style="color: #FF8C00;">A11UD</a><br>
+
+    <div class="bottom-left">
+        <strong>GitHub:</strong> <a href="https://github.com/A11UD" target="_blank">A11UD</a><br>
         <strong>Discord:</strong> a11u666
-    </p>
+    </div>
 </body>
 </html>
