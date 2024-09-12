@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Simple Calculator</title>
+    <title>Simple Calculator and Wheel</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -116,7 +116,7 @@
             align-items: flex-start;
         }
         .wheel-button, .add-participant-button {
-            margin-top: 10px; /* Reduced margin for alignment */
+            margin-top: 10px; /* Spacing between buttons */
             padding: 10px 20px;
             font-size: 18px;
             background-color: #FF8C00;
@@ -128,21 +128,21 @@
         .wheel-result {
             font-size: 18px;
             color: #FF8C00;
-            margin-top: 10px; /* Reduced margin for alignment */
+            margin-top: 10px;
             background-color: #333; /* Matching background color */
-            padding: 10px; /* Padding for better appearance */
+            padding: 10px;
             border-radius: 5px; /* Rounded corners for consistency */
         }
         .participant-form {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
+            position: fixed;
+            left: 340px; /* Aligned with wheel controls */
+            top: 450px; /* Positioned below the wheel controls */
             background-color: rgba(0, 0, 0, 0.7); /* Dark background with transparency */
             padding: 20px;
             border-radius: 10px;
-            position: fixed;
-            left: 340px; /* Aligned with the wheel controls */
-            top: 200px; /* Positioned above the wheel */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
         .participant-form input {
             padding: 10px;
@@ -263,9 +263,7 @@
             let angle = 360 / numSegments;
             for (let i = 0; i < numSegments; i++) {
                 let startAngle = i * angle;
-                let endAngle = (i + 1) * angle;
                 let rotateStart = (startAngle + 90) % 360;
-                let rotateEnd = (endAngle + 90) % 360;
                 segments += `
                     <div class="wheel-segment" style="transform: rotate(${rotateStart}deg);">
                         <span>${participants[i]}</span>
