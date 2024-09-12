@@ -98,6 +98,26 @@
             font-size: 18px;
             color: #FF8C00;
         }
+        .participant-form {
+            margin-bottom: 20px;
+        }
+        .participant-form input {
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 5px;
+            border: 2px solid #FF8C00;
+            color: #FFF;
+            background-color: #222;
+        }
+        .participant-form button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #FF8C00;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -135,6 +155,12 @@
         </div>
     </div>
 
+    <!-- Participant Input Form -->
+    <div class="participant-form">
+        <input type="text" id="participant-input" placeholder="Enter participant name">
+        <button onclick="addParticipantFromInput()">Add Participant</button>
+    </div>
+
     <!-- Spinning Wheel -->
     <div class="wheel-container">
         <div class="wheel" id="wheel"></div>
@@ -151,6 +177,7 @@
         let resultField = document.getElementById('result');
         let wheel = document.getElementById('wheel');
         let wheelResult = document.getElementById('wheel-result');
+        let participantInput = document.getElementById('participant-input');
 
         // Append character to input field
         function appendCharacter(character) {
@@ -188,7 +215,7 @@
 
         // Spinning wheel functionality
         let participants = [];
-        
+
         function spinWheel() {
             if (participants.length === 0) {
                 wheelResult.textContent = 'Add participants first!';
@@ -210,6 +237,12 @@
                 participants.push(name);
                 updateWheel();
             }
+        }
+
+        function addParticipantFromInput() {
+            let name = participantInput.value.trim();
+            addParticipant(name);
+            participantInput.value = ''; // Clear input field
         }
 
         function updateWheel() {
