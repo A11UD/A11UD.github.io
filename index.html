@@ -259,8 +259,8 @@
             setTimeout(() => {
                 let winningIndex = Math.floor((spinDegree % 360) / (360 / participants.length));
                 wheelResult.textContent = `Winner: ${participants[winningIndex]}`;
-                participants = []; // Clear participants after spin
-                updateWheel();
+                participants = []; // Reset participants after spin
+                updateWheel(); // Clear the wheel after spin
             }, 4000); // Match duration of spin animation
         }
         
@@ -275,16 +275,22 @@
         
         function updateWheel() {
             let numSegments = participants.length;
-            if (numSegments === 0) return; // No participants to display
             let anglePerSegment = 360 / numSegments;
-            let gradient = '';
-            let wheelText = ''; // Variable to store names for display
+            let segmentsHTML = '';
+            
             for (let i = 0; i < numSegments; i++) {
-                gradient += `#FF8C00 ${i * anglePerSegment}deg, #333 ${(i + 1) * anglePerSegment}deg, `;
-                wheelText += `<div class="wheel-text" style="transform: rotate(${i * anglePerSegment}deg) translateY(-40%)">${participants[i]}</div>`;
+                let angleStart = i * anglePerSegment;
+                let angleEnd = (i + 1) * anglePerSegment;
+                segmentsHTML += `
+                    <div class="wheel-segment" style="transform: rotate(${angleStart}deg);">
+                        <div style="transform: rotate(${anglePerSegment / 2}deg);">
+                            <span>${participants[i]}</span>
+                        </div>
+                    </div>
+                `;
             }
-            wheel.style.background = `conic-gradient(${gradient.slice(0, -2)})`;
-            wheel.innerHTML = wheelText; // Add names to the wheel
+            
+            wheel.innerHTML = segmentsHTML;
         }
     </script>
 </body>
