@@ -83,6 +83,7 @@
             border-radius: 50%;
             transform-origin: center;
             background: conic-gradient(#FF8C00 0% 25%, #333 25% 50%, #FF8C00 50% 75%, #333 75% 100%);
+            transition: transform 4s ease-out; /* Smooth spinning effect */
         }
         .wheel-segment {
             position: absolute;
@@ -267,7 +268,7 @@
                 let rotateEnd = (endAngle + 90) % 360;
                 segments += `
                     <div class="wheel-segment" style="transform: rotate(${rotateStart}deg);">
-                        <span style="transform: rotate(${rotateEnd}deg);">${participants[i]}</span>
+                        <span>${participants[i]}</span>
                     </div>
                 `;
             }
@@ -290,6 +291,8 @@
             setTimeout(() => {
                 let winner = participants[randomIndex];
                 wheelResult.innerText = `Winner is: ${winner}`;
+                participants = []; // Clear participants after spinning
+                updateWheel(); // Update the wheel to reflect changes
             }, 4000); // Duration should match the transition time
         }
     </script>
