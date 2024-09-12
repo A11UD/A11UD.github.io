@@ -69,7 +69,6 @@
             width: 300px;
             height: 300px;
             border-radius: 50%;
-            border: 5px solid #FF8C00;
             background-color: #000; /* Background color to enhance visibility of the wheel */
             overflow: hidden;
             display: flex;
@@ -81,13 +80,7 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background: conic-gradient(
-                from 0deg,
-                #FF8C00 0% 25%, 
-                #333 25% 50%, 
-                #FF8C00 50% 75%, 
-                #333 75% 100%
-            );
+            background: transparent; /* Transparent background initially */
             transform-origin: center;
             transition: transform 4s ease-out; /* Smooth spinning effect */
         }
@@ -142,7 +135,7 @@
             border-radius: 5px; /* Rounded corners for consistency */
             text-align: center;
             position: absolute;
-            bottom: -60px; /* Positioned below the wheel */
+            top: 340px; /* Positioned below the wheel controls */
             left: 0;
             width: 300px; /* Same width as the wheel */
             margin-top: 20px; /* Spacing between wheel and result */
@@ -202,12 +195,10 @@
     <!-- Spinning Wheel -->
     <div class="wheel-container">
         <div class="wheel" id="wheel"></div>
+        <div class="wheel-controls">
+            <button class="wheel-button" onclick="spinWheel()">Spin the Wheel!</button>
+        </div>
         <div id="wheel-result" class="wheel-result">Result will appear here</div>
-    </div>
-    
-    <!-- Wheel Controls -->
-    <div class="wheel-controls">
-        <button class="wheel-button" onclick="spinWheel()">Spin the Wheel!</button>
     </div>
     
     <!-- Add Participant Form -->
@@ -278,14 +269,13 @@
 
             let segments = '';
             let angle = 360 / numSegments;
-            let colors = ['#FF8C00', '#333'];
 
             for (let i = 0; i < numSegments; i++) {
                 let startAngle = i * angle;
                 let rotateStart = (startAngle + 90) % 360;
 
                 segments += `
-                    <div class="wheel-segment" style="transform: rotate(${rotateStart}deg); background-color: ${colors[i % 2]};">
+                    <div class="wheel-segment" style="transform: rotate(${rotateStart}deg);">
                         <span>${participants[i]}</span>
                     </div>
                 `;
