@@ -70,8 +70,11 @@
             height: 300px;
             border-radius: 50%;
             border: 5px solid #FF8C00;
-            overflow: hidden;
             background-color: #000; /* Background color to enhance visibility of the wheel */
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .wheel {
             position: absolute;
@@ -80,7 +83,28 @@
             border-radius: 50%;
             transform-origin: center;
             background: conic-gradient(#FF8C00 0% 25%, #333 25% 50%, #FF8C00 50% 75%, #333 75% 100%);
-            transition: transform 4s cubic-bezier(0.33, 0, 0.67, 1);
+        }
+        .wheel-segment {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            overflow: hidden;
+            text-align: center;
+            line-height: 1.2;
+            transform-origin: 100% 100%;
+            background: transparent;
+        }
+        .wheel-segment span {
+            display: block;
+            position: absolute;
+            width: 100%;
+            transform: rotate(-90deg);
+            font-size: 14px; /* Smaller font size to fit names better */
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 50%;
+            transform: translateY(-50%) rotate(90deg); /* Center text */
         }
         .wheel-controls {
             position: fixed;
@@ -104,6 +128,9 @@
             font-size: 18px;
             color: #FF8C00;
             margin-top: 10px; /* Reduced margin for alignment */
+            background-color: #333; /* Matching background color */
+            padding: 10px; /* Padding for better appearance */
+            border-radius: 5px; /* Rounded corners for consistency */
         }
         .participant-form {
             display: flex;
@@ -112,6 +139,9 @@
             background-color: rgba(0, 0, 0, 0.7); /* Dark background with transparency */
             padding: 20px;
             border-radius: 10px;
+            position: fixed;
+            left: 340px; /* Aligned with the wheel controls */
+            top: 200px; /* Positioned above the wheel */
         }
         .participant-form input {
             padding: 10px;
@@ -119,46 +149,14 @@
             margin-bottom: 10px;
             border: 2px solid #FF8C00;
             border-radius: 5px;
-            background-color: #222; /* Dark background for input */
-            color: #FFF; /* White text color for contrast */
-        }
-        .participant-form button {
-            padding: 10px 20px;
-            font-size: 18px;
-            background-color: #FF8C00;
-            border: none;
+            background-color: #222;
             color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .bottom-left {
-            position: fixed;
-            bottom: 10px;
-            left: 600px;
-            font-size: 18px;
-            color: #FF8C00;
-        }
-        .wheel-text {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px; /* Smaller font size to fit names better */
-            color: white;
-            text-align: center;
-            transform: translateY(-50%); /* Center text vertically */
-            padding: 5px;
-            box-sizing: border-box;
-            font-weight: bold;
-            overflow: hidden;
         }
     </style>
 </head>
 <body>
     <h1>Greetings wanderer, you seem to be lost if you have come here.</h1>
-    
+
     <!-- Simple Calculator -->
     <div class="calculator">
         <input type="text" id="result" disabled>
@@ -185,49 +183,50 @@
             <button onclick="openMol()">SQRT</button>
         </div>
     </div>
-    
+
     <!-- Spinning Wheel -->
     <div class="wheel-container">
-        <div class="wheel" id="wheel">
-            <!-- Dynamically added participant names will be inserted here -->
-        </div>
+        <div class="wheel" id="wheel"></div>
     </div>
     
+    <!-- Wheel Controls -->
     <div class="wheel-controls">
-        <div class="participant-form">
-            <input type="text" id="participantName" placeholder="Enter participant name">
-            <button class="add-participant-button" type="button" onclick="addParticipant()">Add Participant</button>
-        </div>
         <button class="wheel-button" onclick="spinWheel()">Spin the Wheel!</button>
-        <div class="wheel-result" id="wheel-result">Result will appear here</div>
+        <div id="wheel-result" class="wheel-result">Result will appear here</div>
     </div>
     
+    <!-- Add Participant Form -->
+    <div class="participant-form">
+        <input type="text" id="participantName" placeholder="Enter participant name">
+        <button class="add-participant-button" onclick="addParticipant()">Add Participant</button>
+    </div>
+
     <div class="bottom-left">
         <strong>GitHub:</strong> <a href="https://github.com/A11UD" target="_blank" style="color: #FF8C00;">A11UD</a><br>
         <strong>Discord:</strong> a11u666
     </div>
-    
+
     <script>
         let resultField = document.getElementById('result');
         let wheel = document.getElementById('wheel');
         let wheelResult = document.getElementById('wheel-result');
         let participants = [];
-        
+
         // Append character to input field
         function appendCharacter(character) {
             resultField.value += character;
         }
-        
+
         // Clear the input field
         function clearResult() {
             resultField.value = '';
         }
-        
+
         // Delete the last character
         function deleteLast() {
             resultField.value = resultField.value.slice(0, -1);
         }
-        
+
         // Calculate the result
         function calculateResult() {
             try {
@@ -236,61 +235,62 @@
                 resultField.value = 'Error';
             }
         }
-        
+
         function openRickRoll() {
             window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
         }
-        
+
         // Open Mol.fi
         function openMol() {
             window.open('https://www.mol.fi', '_blank');
         }
-        
-        function spinWheel() {
-            if (participants.length === 0) {
-                wheelResult.textContent = 'Add participants first!';
-                return;
-            }
-            let spinDegree = Math.floor(Math.random() * 360) + 3600; // Ensures multiple spins
-            wheel.style.transition = 'transform 4s cubic-bezier(0.33, 0, 0.67, 1)';
-            wheel.style.transform = `rotate(${spinDegree}deg)`;
-            
-            // Calculate winner after spin
-            setTimeout(() => {
-                let winningIndex = Math.floor((spinDegree % 360) / (360 / participants.length));
-                wheelResult.textContent = `Winner: ${participants[winningIndex]}`;
-                participants = []; // Reset participants after spin
-                updateWheel(); // Clear the wheel after spin
-            }, 4000); // Match duration of spin animation
-        }
-        
+
+        // Add participant
         function addParticipant() {
             let name = document.getElementById('participantName').value.trim();
-            if (name && !participants.includes(name)) {
+            if (name) {
                 participants.push(name);
+                document.getElementById('participantName').value = '';
                 updateWheel();
-                document.getElementById('participantName').value = ''; // Clear input field
             }
         }
-        
+
+        // Update the wheel with participants
         function updateWheel() {
-            let numSegments = participants.length;
-            let anglePerSegment = 360 / numSegments;
-            let segmentsHTML = '';
-            
+            const numSegments = participants.length;
+            let segments = '';
+            let angle = 360 / numSegments;
             for (let i = 0; i < numSegments; i++) {
-                let angleStart = i * anglePerSegment;
-                let angleEnd = (i + 1) * anglePerSegment;
-                segmentsHTML += `
-                    <div class="wheel-segment" style="transform: rotate(${angleStart}deg);">
-                        <div style="transform: rotate(${anglePerSegment / 2}deg);">
-                            <span>${participants[i]}</span>
-                        </div>
+                let startAngle = i * angle;
+                let endAngle = (i + 1) * angle;
+                let rotateStart = (startAngle + 90) % 360;
+                let rotateEnd = (endAngle + 90) % 360;
+                segments += `
+                    <div class="wheel-segment" style="transform: rotate(${rotateStart}deg);">
+                        <span style="transform: rotate(${rotateEnd}deg);">${participants[i]}</span>
                     </div>
                 `;
             }
-            
-            wheel.innerHTML = segmentsHTML;
+            wheel.innerHTML = segments;
+        }
+
+        // Spin the wheel
+        function spinWheel() {
+            if (participants.length === 0) {
+                wheelResult.innerText = 'Add participants to spin!';
+                return;
+            }
+
+            let randomIndex = Math.floor(Math.random() * participants.length);
+            let segmentAngle = 360 / participants.length;
+            let rotateAngle = randomIndex * segmentAngle + (360 * 10); // Extra rotations for effect
+
+            wheel.style.transform = `rotate(${rotateAngle}deg)`;
+
+            setTimeout(() => {
+                let winner = participants[randomIndex];
+                wheelResult.innerText = `Winner is: ${winner}`;
+            }, 4000); // Duration should match the transition time
         }
     </script>
 </body>
