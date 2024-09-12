@@ -31,8 +31,8 @@
         }
         .calculator input {
             width: 100%;
-            height: 60px;
-            font-size: 24px;
+            height: 60px; /* Increased height for better visibility */
+            font-size: 24px; /* Adjusted font size for readability */
             text-align: right;
             margin-bottom: 10px;
             border: 2px solid #FF8C00; /* Orange border to make it stand out */
@@ -40,9 +40,10 @@
             padding: 10px;
             box-sizing: border-box;
             color: #FFF; /* White text color for contrast */
+            background-color: #222; /* Dark background for input */
         }
         .calculator button {
-            width: 22%;
+            width: 100%; /* Make buttons take full width of grid cell */
             height: 50px;
             font-size: 20px;
             margin: 2px;
@@ -55,13 +56,15 @@
         .calculator button.operator {
             background-color: #FF8C00;
         }
-        .calculator button.double-width {
-            width: 46%;
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* Create 4 equal columns */
+            gap: 4px; /* Space between buttons */
         }
         .bottom-left {
             position: fixed;
             bottom: 10px;
-            left: 200px;
+            left: 20px;
             font-size: 18px;
             color: #FF8C00;
         }
@@ -74,29 +77,30 @@
     <!-- Simple Calculator -->
     <div class="calculator">
         <input type="text" id="result" disabled>
-        <br>
-        <button class="double-width" onclick="clearResult()">C</button>
-        <button onclick="deleteLast()">DEL</button>
-        <button class="operator" onclick="appendCharacter('/')">/</button>
-        <button class="operator" onclick="appendCharacter('*')">*</button>
-        <br>
-        <button onclick="appendCharacter('7')">7</button>
-        <button onclick="appendCharacter('8')">8</button>
-        <button onclick="appendCharacter('9')">9</button>
-        <button class="operator" onclick="appendCharacter('-')">-</button>
-        <br>
-        <button onclick="appendCharacter('4')">4</button>
-        <button onclick="appendCharacter('5')">5</button>
-        <button onclick="appendCharacter('6')">6</button>
-        <button class="operator" onclick="appendCharacter('+')">+</button>
-        <br>
-        <button onclick="appendCharacter('1')">1</button>
-        <button onclick="appendCharacter('2')">2</button>
-        <button onclick="appendCharacter('3')">3</button>
-        <button class="operator" onclick="calculateResult()">=</button>
-        <br>
-        <button class="double-width" onclick="appendCharacter('0')">0</button>
-        <button onclick="appendCharacter('.')">.</button>
+        <div class="button-grid">
+            <button class="double-width" onclick="clearResult()">C</button>
+            <button onclick="deleteLast()">DEL</button>
+            <button class="operator" onclick="appendCharacter('/')">/</button>
+            <button class="operator" onclick="appendCharacter('*')">*</button>
+
+            <button onclick="appendCharacter('7')">7</button>
+            <button onclick="appendCharacter('8')">8</button>
+            <button onclick="appendCharacter('9')">9</button>
+            <button class="operator" onclick="appendCharacter('-')">-</button>
+
+            <button onclick="appendCharacter('4')">4</button>
+            <button onclick="appendCharacter('5')">5</button>
+            <button onclick="appendCharacter('6')">6</button>
+            <button class="operator" onclick="appendCharacter('+')">+</button>
+
+            <button onclick="appendCharacter('1')">1</button>
+            <button onclick="appendCharacter('2')">2</button>
+            <button onclick="appendCharacter('3')">3</button>
+            <button class="operator" onclick="calculateResult()">=</button>
+
+            <button class="double-width" onclick="appendCharacter('0')">0</button>
+            <button onclick="appendCharacter('.')">.</button>
+        </div>
     </div>
 
     <div class="bottom-left">
