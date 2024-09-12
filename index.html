@@ -71,10 +71,10 @@
             border-radius: 50%;
             border: 5px solid #FF8C00;
             overflow: hidden;
-            margin-top: 20px;
             display: flex;
-            flex-direction: column;
             align-items: center;
+            justify-content: center;
+            margin-top: 20px;
         }
         .wheel {
             width: 100%;
@@ -83,8 +83,16 @@
             transform-origin: center;
             background: conic-gradient(#FF8C00 0% 25%, #333 25% 50%, #FF8C00 50% 75%, #333 75% 100%);
         }
+        .wheel-controls {
+            position: absolute;
+            right: -180px; /* Adjust based on wheel size */
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         .wheel-button {
-            margin-top: 20px;
             padding: 10px 20px;
             font-size: 18px;
             background-color: #FF8C00;
@@ -92,13 +100,11 @@
             color: white;
             border-radius: 5px;
             cursor: pointer;
+            margin-bottom: 20px;
         }
-        .bottom-left {
-            position: fixed;
-            bottom: 10px;
-            left: 200px;
+        .wheel-result {
             font-size: 18px;
-            color: #FF8C00;
+            color: white;
         }
         .participant-form {
             margin-bottom: 20px;
@@ -119,6 +125,13 @@
             color: white;
             border-radius: 5px;
             cursor: pointer;
+        }
+        .bottom-left {
+            position: fixed;
+            bottom: 10px;
+            left: 200px;
+            font-size: 18px;
+            color: #FF8C00;
         }
     </style>
 </head>
@@ -166,8 +179,10 @@
     <!-- Spinning Wheel -->
     <div class="wheel-container">
         <div class="wheel" id="wheel"></div>
-        <button class="wheel-button" onclick="spinWheel()">Spin the Wheel!</button>
-        <h2 id="wheel-result">Result will appear here</h2>
+        <div class="wheel-controls">
+            <button class="wheel-button" onclick="spinWheel()">Spin the Wheel!</button>
+            <h2 id="wheel-result" class="wheel-result">Result will appear here</h2>
+        </div>
     </div>
 
     <div class="bottom-left">
@@ -180,6 +195,7 @@
         let wheel = document.getElementById('wheel');
         let wheelResult = document.getElementById('wheel-result');
         let participantInput = document.getElementById('participant-input');
+        let participants = [];
 
         // Append character to input field
         function appendCharacter(character) {
@@ -216,8 +232,6 @@
         }
 
         // Spinning wheel functionality
-        let participants = [];
-
         function spinWheel() {
             if (participants.length === 0) {
                 wheelResult.textContent = 'Add participants first!';
@@ -231,6 +245,8 @@
             setTimeout(() => {
                 let winningIndex = Math.floor((spinDegree % 360) / (360 / participants.length));
                 wheelResult.textContent = `Winner: ${participants[winningIndex]}`;
+                participants = []; // Reset participants after spin
+                updateWheel();
             }, 4000); // Match duration of spin animation
         }
 
@@ -249,6 +265,7 @@
 
         function updateWheel() {
             let numSegments = participants.length;
+            if (numSegments === 0) return;
             let anglePerSegment = 360 / numSegments;
             let gradient = '';
             for (let i = 0; i < numSegments; i++) {
@@ -256,11 +273,6 @@
             }
             wheel.style.background = `conic-gradient(${gradient.slice(0, -2)})`;
         }
-
-        // Example of adding participants
-        addParticipant('Alice');
-        addParticipant('Bob');
-        addParticipant('Charlie');
     </script>
 
 </body>
