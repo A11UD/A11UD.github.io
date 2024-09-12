@@ -290,19 +290,21 @@
         let color = colors[i % colors.length]; // Cycle through the available colors
         gradient += `${color} ${i * anglePerSegment}deg ${(i + 1) * anglePerSegment}deg, `;
         
-        // Rotate and position the text within each segment
+        // Create the text inside the segment
         wheelText += `
             <div class="wheel-text" style="
-                transform: rotate(${i * anglePerSegment + anglePerSegment / 2}deg);
-                transform-origin: 0 0; /* This ensures the text stays on the edge of the circle */
-                width: 50%; /* Keep it narrow so the text stays within the segment */
-                text-align: center;
+                transform: rotate(${i * anglePerSegment + anglePerSegment / 2}deg) translate(0, -150px);
+                transform-origin: center;
                 position: absolute;
-                top: 50%; /* Ensures the text starts from the center */
-                left: 50%; /* Ensures the text starts from the center */
-                color: white; /* Ensure contrast with background */
-                font-size: 14px; /* Smaller size to fit names */
+                top: 50%;
+                left: 50%;
+                width: 100px; /* Ensure text stays inside its segment */
+                text-align: center;
+                font-size: 14px;
                 font-weight: bold;
+                color: white;
+                z-index: 10; /* Ensures text is above the background */
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Shadow for better contrast */
             ">
                 ${participants[i]}
             </div>`;
@@ -313,7 +315,6 @@
     // Insert the text segments into the wheel
     wheel.innerHTML = wheelText;
 }
-
 
 
 
