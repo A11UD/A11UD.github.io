@@ -150,14 +150,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px; /* Smaller font size to fit names better */
+    font-size: 14px; /* Adjust font size if needed */
     color: white;
     text-align: center;
     padding: 5px;
     box-sizing: border-box;
     font-weight: bold;
     overflow: hidden;
+    white-space: nowrap; /* Prevent text wrapping */
 }
+
+
 
     </style>
 </head>
@@ -290,20 +293,24 @@
         let color = colors[i % colors.length]; // Cycle through the available colors
         gradient += `${color} ${i * anglePerSegment}deg ${(i + 1) * anglePerSegment}deg, `;
         
+        // Calculate the rotation for each text element
+        let rotation = i * anglePerSegment + anglePerSegment / 2;
+        
         // Create the text inside the segment
         wheelText += `
             <div class="wheel-text" style="
-                transform: rotate(${i * anglePerSegment + anglePerSegment / 2}deg) translate(130px) rotate(${anglePerSegment / 2}deg);
-                transform-origin: 0 0;
+                transform: rotate(${rotation}deg) translate(130px) rotate(-${rotation}deg);
+                transform-origin: center center;
                 position: absolute;
                 top: 50%;
                 left: 50%;
+                width: 100%;
                 text-align: center;
-                font-size: 14px;
-                font-weight: bold;
+                font-size: 14px; /* Adjust font size if needed */
                 color: white;
                 z-index: 10; /* Ensures text is above the background */
                 text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Shadow for better contrast */
+                white-space: nowrap; /* Prevent text wrapping */
             ">
                 ${participants[i]}
             </div>`;
@@ -314,17 +321,6 @@
     // Insert the text segments into the wheel
     wheel.innerHTML = wheelText;
 }
-
-
-    // Apply the gradient to the wheel
-    wheel.style.background = `conic-gradient(${gradient.slice(0, -2)})`;
-    // Insert the text segments into the wheel
-    wheel.innerHTML = wheelText;
-
-
-
-
-        
     </script>
 </body>
 </html>
