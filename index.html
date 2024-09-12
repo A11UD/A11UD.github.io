@@ -272,14 +272,6 @@
             }, 4000); // Match duration of spin animation
         }
         
-        function addParticipant() {
-            let name = document.getElementById('participantName').value.trim();
-            if (name && !participants.includes(name)) {
-                participants.push(name);
-                updateWheel();
-                document.getElementById('participantName').value = ''; // Clear input field
-            }
-        }
         function updateWheel() {
     let numSegments = participants.length;
     if (numSegments === 0) return; // No participants to display
@@ -299,15 +291,15 @@
         // Create the text inside the segment
         wheelText += `
             <div class="wheel-text" style="
-                transform: rotate(${rotation}deg) translate(130px) rotate(-${rotation}deg);
-                transform-origin: center center;
                 position: absolute;
-                top: 50%;
-                left: 50%;
                 width: 100%;
+                height: 100%;
+                transform: rotate(${rotation}deg) translateY(-50%) rotate(-${rotation}deg);
+                transform-origin: center;
                 text-align: center;
-                font-size: 14px; /* Adjust font size if needed */
+                line-height: 1.2; /* Adjust line-height for better vertical alignment */
                 color: white;
+                font-size: 14px; /* Adjust font size if needed */
                 z-index: 10; /* Ensures text is above the background */
                 text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Shadow for better contrast */
                 white-space: nowrap; /* Prevent text wrapping */
@@ -321,6 +313,7 @@
     // Insert the text segments into the wheel
     wheel.innerHTML = wheelText;
 }
+
 
     </script>
 </body>
