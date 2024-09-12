@@ -71,6 +71,7 @@
             border-radius: 50%;
             border: 5px solid #FF8C00;
             overflow: hidden;
+            background-color: #000; /* Background color to enhance visibility of the wheel */
         }
         .wheel {
             position: absolute;
@@ -79,6 +80,7 @@
             border-radius: 50%;
             transform-origin: center;
             background: conic-gradient(#FF8C00 0% 25%, #333 25% 50%, #FF8C00 50% 75%, #333 75% 100%);
+            transition: transform 4s cubic-bezier(0.33, 0, 0.67, 1);
         }
         .wheel-controls {
             position: fixed;
@@ -132,9 +134,24 @@
         .bottom-left {
             position: fixed;
             bottom: 10px;
-            left: 400px;
+            left: 600px;
             font-size: 18px;
             color: #FF8C00;
+        }
+        .wheel-text {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+            text-align: center;
+            padding: 5px;
+            box-sizing: border-box;
+            font-weight: bold;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -170,7 +187,9 @@
     
     <!-- Spinning Wheel -->
     <div class="wheel-container">
-        <div class="wheel" id="wheel"></div>
+        <div class="wheel" id="wheel">
+            <!-- Dynamically added participant names will be inserted here -->
+        </div>
     </div>
     
     <div class="wheel-controls">
@@ -256,10 +275,13 @@
             let numSegments = participants.length;
             let anglePerSegment = 360 / numSegments;
             let gradient = '';
+            let wheelText = ''; // Variable to store names for display
             for (let i = 0; i < numSegments; i++) {
                 gradient += `#FF8C00 ${i * anglePerSegment}deg, #333 ${(i + 1) * anglePerSegment}deg, `;
+                wheelText += `<div class="wheel-text" style="transform: rotate(${i * anglePerSegment}deg) translateY(-50%)">${participants[i]}</div>`;
             }
             wheel.style.background = `conic-gradient(${gradient.slice(0, -2)})`;
+            wheel.innerHTML = wheelText; // Add names to the wheel
         }
     </script>
 </body>
