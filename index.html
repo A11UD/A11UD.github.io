@@ -133,8 +133,10 @@
             padding: 10px;
             border-radius: 5px; /* Rounded corners for consistency */
             position: absolute;
-            bottom: 0; /* Align with the bottom of the wheel */
+            bottom: -60px; /* Positioned below the wheel */
             left: 0;
+            width: 300px; /* Same width as the wheel */
+            text-align: center;
         }
         .participant-form {
             position: fixed;
@@ -197,6 +199,7 @@
     <!-- Wheel Controls -->
     <div class="wheel-controls">
         <button class="wheel-button" onclick="spinWheel()">Spin the Wheel!</button>
+        <div id="wheel-result" class="wheel-result">Result will appear here</div>
     </div>
     
     <!-- Add Participant Form -->
