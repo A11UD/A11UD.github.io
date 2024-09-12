@@ -81,7 +81,13 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background: conic-gradient(#FF8C00 0% 25%, #333 25% 50%, #FF8C00 50% 75%, #333 75% 100%);
+            background: conic-gradient(
+                from 0deg,
+                #FF8C00 0% 25%, 
+                #333 25% 50%, 
+                #FF8C00 50% 75%, 
+                #333 75% 100%
+            );
             transform-origin: center;
             transition: transform 4s ease-out; /* Smooth spinning effect */
         }
@@ -102,10 +108,13 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 14px; /* Smaller font size to fit names better */
+            font-size: 16px; /* Adjusted for better visibility */
             color: white;
             font-weight: bold;
             text-align: center;
+            background: rgba(0, 0, 0, 0.7); /* Dark background for names */
+            border-radius: 5px;
+            padding: 2px;
         }
         .wheel-controls {
             position: fixed;
@@ -128,15 +137,15 @@
         .wheel-result {
             font-size: 18px;
             color: #FF8C00;
-            margin-top: 10px;
             background-color: #333; /* Matching background color */
             padding: 10px;
             border-radius: 5px; /* Rounded corners for consistency */
+            text-align: center;
             position: absolute;
             bottom: -60px; /* Positioned below the wheel */
             left: 0;
             width: 300px; /* Same width as the wheel */
-            text-align: center;
+            margin-top: 20px; /* Spacing between wheel and result */
         }
         .participant-form {
             position: fixed;
@@ -199,7 +208,6 @@
     <!-- Wheel Controls -->
     <div class="wheel-controls">
         <button class="wheel-button" onclick="spinWheel()">Spin the Wheel!</button>
-        <div id="wheel-result" class="wheel-result">Result will appear here</div>
     </div>
     
     <!-- Add Participant Form -->
@@ -270,13 +278,14 @@
 
             let segments = '';
             let angle = 360 / numSegments;
+            let colors = ['#FF8C00', '#333'];
 
             for (let i = 0; i < numSegments; i++) {
                 let startAngle = i * angle;
                 let rotateStart = (startAngle + 90) % 360;
 
                 segments += `
-                    <div class="wheel-segment" style="transform: rotate(${rotateStart}deg);">
+                    <div class="wheel-segment" style="transform: rotate(${rotateStart}deg); background-color: ${colors[i % 2]};">
                         <span>${participants[i]}</span>
                     </div>
                 `;
