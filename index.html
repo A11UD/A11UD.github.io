@@ -144,24 +144,21 @@
             color: #FF8C00;
         }
         .wheel-text {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px; /* Adjust font size if needed */
-    color: white;
-    text-align: center;
-    padding: 5px;
-    box-sizing: border-box;
-    font-weight: bold;
-    overflow: hidden;
-    white-space: nowrap; /* Prevent text wrapping */
-}
-
-
-
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px; /* Adjust font size if needed */
+            color: white;
+            text-align: center;
+            padding: 5px;
+            box-sizing: border-box;
+            font-weight: bold;
+            overflow: hidden;
+            white-space: nowrap; /* Prevent text wrapping */
+        }
     </style>
 </head>
 <body>
@@ -272,53 +269,67 @@
             }, 4000); // Match duration of spin animation
         }
         
+        function addParticipant() {
+            let participantName = document.getElementById('participantName').value.trim();
+            if (participantName === '') {
+                alert('Please enter a participant name.');
+                return;
+            }
+            
+            // Add the new participant to the array
+            participants.push(participantName);
+            
+            // Clear the input field
+            document.getElementById('participantName').value = '';
+            
+            // Update the wheel with the new participant list
+            updateWheel();
+        }
+        
         function updateWheel() {
-    let numSegments = participants.length;
-    if (numSegments === 0) return; // No participants to display
-    
-    let anglePerSegment = 360 / numSegments;
-    let colors = ['#FF8C00', '#00FF00', '#FF0000', '#0000FF', '#FFFF00', '#FF00FF']; // Add more colors if necessary
-    let gradient = '';
-    let wheelText = ''; // Variable to store names for display
+            let numSegments = participants.length;
+            if (numSegments === 0) return; // No participants to display
+            
+            let anglePerSegment = 360 / numSegments;
+            let colors = ['#FF8C00', '#00FF00', '#FF0000', '#0000FF', '#FFFF00', '#FF00FF']; // Add more colors if necessary
+            let gradient = '';
 
-    // Clear the wheel content before updating
-    wheel.innerHTML = '';
+            // Clear the wheel content before updating
+            wheel.innerHTML = '';
 
-    for (let i = 0; i < numSegments; i++) {
-        let color = colors[i % colors.length]; // Cycle through the available colors
-        gradient += `${color} ${i * anglePerSegment}deg ${(i + 1) * anglePerSegment}deg, `;
-        
-        // Calculate the rotation for each text element
-        let rotation = i * anglePerSegment + anglePerSegment / 2;
-        
-        // Create the text inside the segment
-        let segmentText = document.createElement('div');
-        segmentText.className = 'wheel-text';
-        segmentText.style.transform = `rotate(${rotation}deg) translateY(-50%) rotate(-${rotation}deg)`;
-        segmentText.style.transformOrigin = 'center';
-        segmentText.style.textAlign = 'center';
-        segmentText.style.lineHeight = '1.2'; // Adjust line-height for better vertical alignment
-        segmentText.style.color = 'white';
-        segmentText.style.fontSize = '14px'; // Adjust font size if needed
-        segmentText.style.zIndex = '10'; // Ensures text is above the background
-        segmentText.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.7)'; // Shadow for better contrast
-        segmentText.style.whiteSpace = 'nowrap'; // Prevent text wrapping
-        segmentText.style.position = 'absolute';
-        segmentText.style.top = '50%';
-        segmentText.style.left = '50%';
-        segmentText.style.width = '100%';
-        segmentText.style.height = '100%';
-        segmentText.innerHTML = participants[i];
-        
-        wheel.appendChild(segmentText);
-    }
+            for (let i = 0; i < numSegments; i++) {
+                let color = colors[i % colors.length]; // Cycle through the available colors
+                gradient += `${color} ${i * anglePerSegment}deg ${(i + 1) * anglePerSegment}deg, `;
+                
+                // Calculate the rotation for each text element
+                let rotation = i * anglePerSegment + anglePerSegment / 2;
+                
+                // Create the text inside the segment
+                let segmentText = document.createElement('div');
+                segmentText.className = 'wheel-text';
+                segmentText.style.transform = `rotate(${rotation}deg) translateY(-50%) rotate(-${rotation}deg)`;
+                segmentText.style.transformOrigin = 'center';
+                segmentText.style.textAlign = 'center';
+                segmentText.style.lineHeight = '1.2'; // Adjust line-height for better vertical alignment
+                segmentText.style.color = 'white';
+                segmentText.style.fontSize = '14px'; // Adjust font size if needed
+                segmentText.style.zIndex = '10'; // Ensures text is above the background
+                segmentText.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.7)'; // Shadow for better contrast
+                segmentText.style.whiteSpace = 'nowrap'; // Prevent text wrapping
+                segmentText.style.position = 'absolute';
+                segmentText.style.top = '50%';
+                segmentText.style.left = '50%';
+                segmentText.style.width = '100%';
+                segmentText.style.height = '100%';
+                segmentText.style.textAlign = 'center';
+                segmentText.innerHTML = participants[i];
+                
+                wheel.appendChild(segmentText);
+            }
 
-    // Apply the gradient to the wheel
-    wheel.style.background = `conic-gradient(${gradient.slice(0, -2)})`;
-}
-
-
-
+            // Apply the gradient to the wheel
+            wheel.style.background = `conic-gradient(${gradient.slice(0, -2)})`;
+        }
     </script>
 </body>
 </html>
