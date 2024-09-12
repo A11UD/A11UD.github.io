@@ -280,10 +280,10 @@
                 document.getElementById('participantName').value = ''; // Clear input field
             }
         }
-        
         function updateWheel() {
     let numSegments = participants.length;
     if (numSegments === 0) return; // No participants to display
+    
     let anglePerSegment = 360 / numSegments;
     let colors = ['#FF8C00', '#00FF00', '#FF0000', '#0000FF', '#FFFF00', '#FF00FF']; // Add more colors if necessary
     let gradient = '';
@@ -321,6 +321,7 @@
     // Insert the text segments into the wheel
     wheel.innerHTML = wheelText;
 }
+
     </script>
 </body>
 </html>
