@@ -2,42 +2,117 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Greetings</title>
+    <title>Simple Calculator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-image: url('guts.jpg'); /* Path to your image */
-            background-size: cover; /* Ensures the image covers the entire page */
-            background-position: center 15%; /* Adjusts the image position slightly */
-            background-repeat: no-repeat; /* Prevents the image from repeating */
-            background-attachment: fixed; /* Adds a parallax effect */
+            background-image: url('guts.jpg'); /* Your background */
+            background-size: cover;
+            background-position: center 20%;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             margin-top: 50px;
+            color: white;
         }
         h1 {
-            font-family: "Brush Script MT", cursive; /* Use Brush Script MT for heading */
+            font-family: "Brush Script MT", cursive;
             font-size: 64px;
-            color: #FF8C00; /* Orange color for contrast with the background */
+            color: #FF8C00;
         }
         .bottom-left {
-            position: fixed; /* Sticks to the bottom-left of the viewport */
-            bottom: 10px; /* 10px from the bottom */
-            left: 10px; /* 10px from the left */
+            position: fixed;
+            bottom: 10px;
+            left: 20px;
             font-size: 18px;
             color: #FF8C00;
         }
-        a {
-            color: #FF8C00; /* Orange link color */
-            text-decoration: none; /* Removes the underline from links */
+        .calculator {
+            display: inline-block;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .calculator input {
+            width: 100%;
+            height: 40px;
+            font-size: 24px;
+            text-align: right;
+            margin-bottom: 10px;
+        }
+        .calculator button {
+            width: 25%;
+            height: 40px;
+            font-size: 20px;
+            margin: 5px 0;
         }
     </style>
 </head>
 <body>
+
     <h1>Greetings wanderer, you seem to be lost if you have come here.</h1>
 
+    <!-- Simple Calculator -->
+    <div class="calculator">
+        <input type="text" id="result" disabled>
+        <br>
+        <button onclick="clearResult()">C</button>
+        <button onclick="deleteLast()">DEL</button>
+        <button onclick="appendCharacter('/')">/</button>
+        <button onclick="appendCharacter('*')">*</button>
+        <br>
+        <button onclick="appendCharacter('7')">7</button>
+        <button onclick="appendCharacter('8')">8</button>
+        <button onclick="appendCharacter('9')">9</button>
+        <button onclick="appendCharacter('-')">-</button>
+        <br>
+        <button onclick="appendCharacter('4')">4</button>
+        <button onclick="appendCharacter('5')">5</button>
+        <button onclick="appendCharacter('6')">6</button>
+        <button onclick="appendCharacter('+')">+</button>
+        <br>
+        <button onclick="appendCharacter('1')">1</button>
+        <button onclick="appendCharacter('2')">2</button>
+        <button onclick="appendCharacter('3')">3</button>
+        <button onclick="calculateResult()">=</button>
+        <br>
+        <button onclick="appendCharacter('0')" style="width: 50%;">0</button>
+        <button onclick="appendCharacter('.')">.</button>
+    </div>
+
     <div class="bottom-left">
-        <strong>GitHub:</strong> <a href="https://github.com/A11UD" target="_blank">A11UD</a><br>
+        <strong>GitHub:</strong> <a href="https://github.com/A11UD" target="_blank" style="color: #FF8C00;">A11UD</a><br>
         <strong>Discord:</strong> a11u666
     </div>
+
+    <script>
+        let resultField = document.getElementById('result');
+
+        // Append character to input field
+        function appendCharacter(character) {
+            resultField.value += character;
+        }
+
+        // Clear the input field
+        function clearResult() {
+            resultField.value = '';
+        }
+
+        // Delete the last character
+        function deleteLast() {
+            resultField.value = resultField.value.slice(0, -1);
+        }
+
+        // Calculate the result
+        function calculateResult() {
+            try {
+                resultField.value = eval(resultField.value); // Use eval to calculate
+            } catch (error) {
+                resultField.value = 'Error';
+            }
+        }
+    </script>
+
 </body>
 </html>
