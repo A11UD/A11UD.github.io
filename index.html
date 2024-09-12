@@ -293,12 +293,12 @@
         // Create the text inside the segment
         wheelText += `
             <div class="wheel-text" style="
-                transform: rotate(${i * anglePerSegment + anglePerSegment / 2}deg) translate(0, -150px);
+                transform: rotate(${i * anglePerSegment + anglePerSegment / 2}deg) translate(0, -50%);
                 transform-origin: center;
                 position: absolute;
                 top: 50%;
                 left: 50%;
-                width: 100px; /* Ensure text stays inside its segment */
+                width: 100%; /* Ensure text stays within segment */
                 text-align: center;
                 font-size: 14px;
                 font-weight: bold;
