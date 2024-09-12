@@ -7,18 +7,29 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background: transparent;
+            background-image: url('guts.jpg'); /* Your background */
+            background-size: cover;
+            background-position: center 10%;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             margin: 0;
             color: white;
         }
+        h1 {
+            font-family: "Lucida Handwriting", cursive;
+            font-size: 64px;
+            color: #FF8C00;
+            font-weight: 300; /* Make text thinner */
+            margin-top: 50px;
+        }
         .calculator {
-            position: relative;
+            position: fixed; /* Fixed position to align it to the left side */
+            left: 20px; /* Distance from the left edge */
+            top: 200px; /* Distance from the top edge */
             padding: 20px;
             background-color: rgba(0, 0, 0, 0.8); /* Less transparent background */
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            margin: 20px auto;
-            width: 300px;
         }
         .calculator input {
             width: 100%;
@@ -55,7 +66,7 @@
         .bottom-left {
             position: fixed;
             bottom: 10px;
-            left: 400px;
+            left: 20px;
             font-size: 18px;
             color: #FF8C00;
         }
@@ -63,6 +74,9 @@
 </head>
 <body>
 
+    <h1>Greetings wanderer, you seem to be lost if you have come here.</h1>
+
+    <!-- Simple Calculator -->
     <div class="calculator">
         <input type="text" id="result" disabled>
         <div class="button-grid">

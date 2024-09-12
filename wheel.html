@@ -28,12 +28,12 @@
             background: conic-gradient(#FF8C00 0% 25%, #333 25% 50%, #FF8C00 50% 75%, #333 75% 100%);
         }
         .wheel-controls {
-            position: absolute;
-            right: 20px;
+            position: fixed;
+            left: 20px;
             top: 20px;
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
+            align-items: flex-start;
         }
         .wheel-button {
             padding: 10px 20px;
@@ -47,14 +47,14 @@
         }
         .wheel-result {
             font-size: 18px;
-            color: white;
+            color: #FF8C00;
             margin-bottom: 20px;
         }
         .participant-form {
             margin-bottom: 20px;
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
+            align-items: flex-start;
         }
         .participant-form input {
             padding: 10px;
@@ -96,7 +96,6 @@
         let participantInput = document.getElementById('participant-input');
         let participants = [];
 
-        // Spinning wheel functionality
         function spinWheel() {
             if (participants.length === 0) {
                 wheelResult.textContent = 'Add participants first!';
@@ -105,7 +104,7 @@
             let spinDegree = Math.floor(Math.random() * 360) + 3600; // Ensures multiple spins
             wheel.style.transition = 'transform 4s cubic-bezier(0.33, 0, 0.67, 1)';
             wheel.style.transform = `rotate(${spinDegree}deg)`;
-
+            
             // Calculate winner after spin
             setTimeout(() => {
                 let winningIndex = Math.floor((spinDegree % 360) / (360 / participants.length));
