@@ -62,10 +62,61 @@
             grid-template-columns: repeat(4, 1fr); /* Create 4 equal columns */
             gap: 4px; /* Space between buttons */
         }
+        .wheel-container {
+            position: fixed;
+            left: 20px;
+            top: 600px; /* Positioned below the calculator */
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 5px solid #FF8C00;
+            overflow: hidden;
+        }
+        .wheel {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transform-origin: center;
+            background: conic-gradient(#FF8C00 0% 25%, #333 25% 50%, #FF8C00 50% 75%, #333 75% 100%);
+        }
+        .wheel-controls {
+            position: fixed;
+            left: 340px; /* Positioned to the right of the wheel */
+            top: 600px; /* Aligned with the top of the wheel */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .wheel-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #FF8C00;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .wheel-result {
+            font-size: 18px;
+            color: #FF8C00;
+            margin-top: 20px;
+        }
+        .participant-form {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .participant-form input {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
         .bottom-left {
             position: fixed;
             bottom: 10px;
-            left: 200px;
+            left: 20px;
             font-size: 18px;
             color: #FF8C00;
         }
@@ -73,6 +124,7 @@
 </head>
 <body>
     <h1>Greetings wanderer, you seem to be lost if you have come here.</h1>
+    
     <!-- Simple Calculator -->
     <div class="calculator">
         <input type="text" id="result" disabled>
@@ -93,32 +145,53 @@
             <button onclick="appendCharacter('2')">2</button>
             <button onclick="appendCharacter('3')">3</button>
             <button class="operator" onclick="calculateResult()">=</button>
-
             <button class="double-width" onclick="appendCharacter('0')">0</button>
             <button onclick="appendCharacter('.')">.</button>
             <button onclick="openRickRoll()">ADVNCD</button>
             <button onclick="openMol()">SQRT</button>
         </div>
     </div>
-
+    
+    <!-- Spinning Wheel -->
+    <div class="wheel-container">
+        <div class="wheel" id="wheel"></div>
+    </div>
+    
+    <div class="wheel-controls">
+        <form class="participant-form">
+            <input type="text" id="participantName" placeholder="Enter participant name">
+            <button type="button" onclick="addParticipant()">Add Participant</button>
+        </form>
+        <button class="wheel-button" onclick="spinWheel()">Spin the Wheel!</button>
+        <div class="wheel-result" id="wheel-result">Result will appear here</div>
+    </div>
+    
     <div class="bottom-left">
         <strong>GitHub:</strong> <a href="https://github.com/A11UD" target="_blank" style="color: #FF8C00;">A11UD</a><br>
         <strong>Discord:</strong> a11u666
     </div>
+    
     <script>
         let resultField = document.getElementById('result');
+        let wheel = document.getElementById('wheel');
+        let wheelResult = document.getElementById('wheel-result');
+        let participants = [];
+        
         // Append character to input field
         function appendCharacter(character) {
             resultField.value += character;
         }
+        
         // Clear the input field
         function clearResult() {
             resultField.value = '';
         }
+        
         // Delete the last character
         function deleteLast() {
             resultField.value = resultField.value.slice(0, -1);
         }
+        
         // Calculate the result
         function calculateResult() {
             try {
@@ -127,16 +200,51 @@
                 resultField.value = 'Error';
             }
         }
+        
         function openRickRoll() {
             window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
         }
-
-        // Open Mol.fi
+        
         function openMol() {
             window.open('https://www.mol.fi', '_blank');
         }
-
+        
+        function spinWheel() {
+            if (participants.length === 0) {
+                wheelResult.textContent = 'Add participants first!';
+                return;
+            }
+            let spinDegree = Math.floor(Math.random() * 360) + 3600; // Ensures multiple spins
+            wheel.style.transition = 'transform 4s cubic-bezier(0.33, 0, 0.67, 1)';
+            wheel.style.transform = `rotate(${spinDegree}deg)`;
+            
+            // Calculate winner after spin
+            setTimeout(() => {
+                let winningIndex = Math.floor((spinDegree % 360) / (360 / participants.length));
+                wheelResult.textContent = `Winner: ${participants[winningIndex]}`;
+                participants = []; // Clear participants after spin
+                updateWheel();
+            }, 4000); // Match duration of spin animation
+        }
+        
+        function addParticipant() {
+            let name = document.getElementById('participantName').value.trim();
+            if (name && !participants.includes(name)) {
+                participants.push(name);
+                updateWheel();
+                document.getElementById('participantName').value = ''; // Clear input field
+            }
+        }
+        
+        function updateWheel() {
+            let numSegments = participants.length;
+            let anglePerSegment = 360 / numSegments;
+            let gradient = '';
+            for (let i = 0; i < numSegments; i++) {
+                gradient += `#FF8C00 ${i * anglePerSegment}deg, #333 ${(i + 1) * anglePerSegment}deg, `;
+            }
+            wheel.style.background = `conic-gradient(${gradient.slice(0, -2)})`;
+        }
     </script>
-
 </body>
 </html>
