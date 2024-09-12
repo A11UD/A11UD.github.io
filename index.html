@@ -69,8 +69,6 @@
             width: 300px;
             height: 300px;
             border-radius: 50%;
-            background-color: #000; /* Background color to enhance visibility of the wheel */
-            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -83,6 +81,7 @@
             background: transparent; /* Transparent background initially */
             transform-origin: center;
             transition: transform 4s ease-out; /* Smooth spinning effect */
+            border: 5px solid #FF8C00; /* Orange border to highlight the wheel */
         }
         .wheel-segment {
             position: absolute;
@@ -273,9 +272,10 @@
             for (let i = 0; i < numSegments; i++) {
                 let startAngle = i * angle;
                 let rotateStart = (startAngle + 90) % 360;
+                let color = i % 2 === 0 ? '#444' : '#666'; // Alternating segment colors
 
                 segments += `
-                    <div class="wheel-segment" style="transform: rotate(${rotateStart}deg);">
+                    <div class="wheel-segment" style="transform: rotate(${rotateStart}deg); background-color: ${color};">
                         <span>${participants[i]}</span>
                     </div>
                 `;
