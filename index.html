@@ -91,7 +91,7 @@
             align-items: flex-start;
         }
         .wheel-button, .add-participant-button {
-            margin-top: 20px;
+            margin-top: 10px; /* Reduced margin for alignment */
             padding: 10px 20px;
             font-size: 18px;
             background-color: #FF8C00;
@@ -103,7 +103,7 @@
         .wheel-result {
             font-size: 18px;
             color: #FF8C00;
-            margin-top: 20px;
+            margin-top: 10px; /* Reduced margin for alignment */
         }
         .participant-form {
             display: flex;
@@ -145,9 +145,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 14px; /* Smaller font size to fit names better */
             color: white;
             text-align: center;
+            transform: translateY(-50%); /* Center text vertically */
             padding: 5px;
             box-sizing: border-box;
             font-weight: bold;
@@ -240,6 +241,7 @@
             window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
         }
         
+        // Open Mol.fi
         function openMol() {
             window.open('https://www.mol.fi', '_blank');
         }
@@ -273,12 +275,13 @@
         
         function updateWheel() {
             let numSegments = participants.length;
+            if (numSegments === 0) return; // No participants to display
             let anglePerSegment = 360 / numSegments;
             let gradient = '';
             let wheelText = ''; // Variable to store names for display
             for (let i = 0; i < numSegments; i++) {
                 gradient += `#FF8C00 ${i * anglePerSegment}deg, #333 ${(i + 1) * anglePerSegment}deg, `;
-                wheelText += `<div class="wheel-text" style="transform: rotate(${i * anglePerSegment}deg) translateY(-50%)">${participants[i]}</div>`;
+                wheelText += `<div class="wheel-text" style="transform: rotate(${i * anglePerSegment}deg) translateY(-40%)">${participants[i]}</div>`;
             }
             wheel.style.background = `conic-gradient(${gradient.slice(0, -2)})`;
             wheel.innerHTML = wheelText; // Add names to the wheel
