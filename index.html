@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator and Wheel</title>
+    <title>Simple Calculator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,30 +14,129 @@
             background-attachment: fixed;
             margin-top: 50px;
             color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            flex-direction: column;
         }
-        iframe {
-            border: none;
+        h1 {
+            font-family: "Lucida Handwriting", cursive;
+            font-size: 64px;
+            color: #FF8C00;
+            font-weight: 300; /* Make text thinner */
+        }
+        .calculator {
+            position: fixed; /* Fixed position to align it to the left side */
+            left: 20px; /* Distance from the left edge */
+            top: 200px; /* Distance from the top edge */
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8); /* Less transparent background */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .calculator input {
             width: 100%;
-            max-width: 800px;
-            height: 500px;
-            margin: 20px;
+            height: 60px; /* Increased height for better visibility */
+            font-size: 24px; /* Adjusted font size for readability */
+            text-align: right;
+            margin-bottom: 10px;
+            border: 2px solid #FF8C00; /* Orange border to make it stand out */
+            border-radius: 5px;
+            padding: 10px;
+            box-sizing: border-box;
+            color: #FFF; /* White text color for contrast */
+            background-color: #222; /* Dark background for input */
+        }
+        .calculator button {
+            width: 100%; /* Make buttons take full width of grid cell */
+            height: 50px;
+            font-size: 20px;
+            margin: 2px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #333;
+            color: white;
+        }
+        .calculator button.operator {
+            background-color: #FF8C00;
+        }
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* Create 4 equal columns */
+            gap: 4px; /* Space between buttons */
+        }
+        .bottom-left {
+            position: fixed;
+            bottom: 10px;
+            left: 200px;
+            font-size: 18px;
+            color: #FF8C00;
         }
     </style>
 </head>
 <body>
+    <h1>Greetings wanderer, you seem to be lost if you have come here.</h1>
+    <!-- Simple Calculator -->
+    <div class="calculator">
+        <input type="text" id="result" disabled>
+        <div class="button-grid">
+            <button class="double-width" onclick="clearResult()">C</button>
+            <button onclick="deleteLast()">DEL</button>
+            <button class="operator" onclick="appendCharacter('/')">/</button>
+            <button class="operator" onclick="appendCharacter('*')">*</button>
+            <button onclick="appendCharacter('7')">7</button>
+            <button onclick="appendCharacter('8')">8</button>
+            <button onclick="appendCharacter('9')">9</button>
+            <button class="operator" onclick="appendCharacter('-')">-</button>
+            <button onclick="appendCharacter('4')">4</button>
+            <button onclick="appendCharacter('5')">5</button>
+            <button onclick="appendCharacter('6')">6</button>
+            <button class="operator" onclick="appendCharacter('+')">+</button>
+            <button onclick="appendCharacter('1')">1</button>
+            <button onclick="appendCharacter('2')">2</button>
+            <button onclick="appendCharacter('3')">3</button>
+            <button class="operator" onclick="calculateResult()">=</button>
 
-    <h1>Calculator and Spinning Wheel</h1>
+            <button class="double-width" onclick="appendCharacter('0')">0</button>
+            <button onclick="appendCharacter('.')">.</button>
+            <button onclick="openRickRoll()">ADVNCD</button>
+            <button onclick="openMol()">SQRT</button>
+        </div>
+    </div>
 
-    <!-- Embed Calculator -->
-    <iframe src="calculator.html"></iframe>
+    <div class="bottom-left">
+        <strong>GitHub:</strong> <a href="https://github.com/A11UD" target="_blank" style="color: #FF8C00;">A11UD</a><br>
+        <strong>Discord:</strong> a11u666
+    </div>
+    <script>
+        let resultField = document.getElementById('result');
+        // Append character to input field
+        function appendCharacter(character) {
+            resultField.value += character;
+        }
+        // Clear the input field
+        function clearResult() {
+            resultField.value = '';
+        }
+        // Delete the last character
+        function deleteLast() {
+            resultField.value = resultField.value.slice(0, -1);
+        }
+        // Calculate the result
+        function calculateResult() {
+            try {
+                resultField.value = eval(resultField.value); // Use eval to calculate
+            } catch (error) {
+                resultField.value = 'Error';
+            }
+        }
+        function openRickRoll() {
+            window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
+        }
 
-    <!-- Embed Wheel -->
-    <iframe src="wheel.html"></iframe>
+        // Open Mol.fi
+        function openMol() {
+            window.open('https://www.mol.fi', '_blank');
+        }
+
+    </script>
 
 </body>
 </html>
