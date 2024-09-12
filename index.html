@@ -79,9 +79,8 @@
             height: 100%;
             border-radius: 50%;
             transform-origin: center;
-            background: conic-gradient(orange 0% 100%); /* Single color for all sectors */
+            background: conic-gradient(#FF8C00 0% 25%, #333 25% 50%, #FF8C00 50% 75%, #333 75% 100%);
             transition: transform 4s cubic-bezier(0.33, 0, 0.67, 1);
-            clip-path: polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%); /* Ensure sectors are separated */
         }
         .wheel-controls {
             position: fixed;
@@ -154,7 +153,8 @@
             font-size: 14px; /* Smaller font size to fit names better */
             color: white;
             text-align: center;
-            transform: rotate(-90deg); /* Rotate names to fit inside sectors */
+            transform: translateY(-50%); /* Center text vertically */
+            padding: 5px;
             box-sizing: border-box;
             font-weight: bold;
             overflow: hidden;
@@ -285,7 +285,7 @@
             let gradient = '';
             let wheelText = ''; // Variable to store names for display
             for (let i = 0; i < numSegments; i++) {
-                gradient += `orange ${i * anglePerSegment}deg, orange ${(i + 1) * anglePerSegment}deg, `;
+                gradient += `#FF8C00 ${i * anglePerSegment}deg, #333 ${(i + 1) * anglePerSegment}deg, `;
                 wheelText += `<div class="wheel-text" style="transform: rotate(${i * anglePerSegment}deg) translateY(-50%)">${participants[i]}</div>`;
             }
             wheel.style.background = `conic-gradient(${gradient.slice(0, -2)})`;
